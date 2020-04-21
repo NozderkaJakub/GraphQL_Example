@@ -1,0 +1,78 @@
+query {
+  malarze {
+    id
+    imie_i_nazwisko
+    wiek
+    obrazy {
+      id
+      nazwa
+      czy_nagrodzone
+    }
+  }
+}
+
+query {
+  muzycy {
+    id
+    imie_i_nazwisko
+    wiek
+    albumy {
+      id
+      nazwa
+      zespol
+      czy_nagrodzone
+    }
+  }
+}
+
+query {
+  muzyk(id:3) {
+    imie_i_nazwisko
+    wiek
+    albumy {
+      id
+      nazwa
+      zespol
+      czy_nagrodzone
+    }
+  }
+}
+
+mutation {
+  dodajMuzyka(imie_i_nazwisko: "XXX" wiek: 40) {
+    id
+    imie_i_nazwisko
+    wiek
+    albumy {
+      nazwa
+    }
+  }
+}
+
+mutation {
+  dodajAlbum(album:{
+    zespol: "Pączki w Tłuszczu"
+    nazwa: "bez nazwy"
+    czy_nagrodzone: false
+    id_artysty: 4
+  }) {
+    id
+    nazwa
+    zespol
+    czy_nagrodzone
+    id_artysty
+  }
+}
+
+query pokaz_informacje_o_muzyku($id_muzyka: ID = 1 $czy_id_albumow: Boolean = false) {
+  muzyk(id:$id_muzyka) {
+    imie_i_nazwisko
+    wiek
+    albumy{
+      id @include(if:$czy_id_albumow)
+      nazwa
+      zespol
+      czy_nagrodzone
+    }
+  }
+}

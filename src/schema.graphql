@@ -1,0 +1,84 @@
+"""Typ **Query**, służy do zwracania danych"""
+type Query {
+  malarze: [Malarz!]
+  malarz(id: ID!): Malarz
+  obrazy: [Obraz!]
+  obraz(id: ID!): Obraz
+  muzycy: [Muzyk!]
+  muzyk(id: ID!): Muzyk
+  albumy: [Album!]
+  album(id: ID!): Album
+}
+
+"""Typ **Mutation**, służy do zmieniania danych"""
+type Mutation {
+  dodajAlbum(album: DaneAlbumu): Album!
+  dodajMuzyka(imie_i_nazwisko: String! wiek: Int!): Muzyk!
+}
+
+"""Typ **Input**, służy do wprowadzania danych"""
+input DaneAlbumu {
+  nazwa: String!
+  czy_nagrodzone: Boolean!
+  zespol: String
+  id_artysty: Int!
+}
+
+"""Interfejs **Artysta**"""
+interface Artysta {
+  id: ID!
+  imie_i_nazwisko: String!
+  wiek: Int!
+}
+
+"""Typ Malarz implementujący interfejs **Artysta** """
+type Malarz implements Artysta {
+  """Numer id w bazie"""
+  id: ID!
+  """Imię i nazwisko artysty"""
+  imie_i_nazwisko: String!
+  """Wiek artysty"""
+  wiek: Int!
+  """Obrazy artysty"""
+  obrazy: [Obraz!]
+}
+
+"""Typ Muzyk implementujący interfejs **Artysta** """
+type Muzyk implements Artysta {
+  """Numer id w bazie"""
+  id: ID!
+  """Imię i nazwisko artysty"""
+  imie_i_nazwisko: String!
+  """Wiek artysty"""
+  wiek: Int!
+  """Albumy artysty"""
+  albumy: [Album]
+}
+
+interface Dzielo {
+  id: ID!
+  nazwa: String!
+  czy_nagrodzone: Boolean!
+  id_artysty: Int!
+}
+
+type Obraz implements Dzielo {
+  id: ID!
+  nazwa: String!
+  czy_nagrodzone: Boolean!
+  id_artysty: Int!
+  cena(waluta: Waluta = "PLN"): String!
+}
+
+type Album implements Dzielo {
+  id: ID!
+  nazwa: String!
+  czy_nagrodzone: Boolean!
+  zespol: String
+  id_artysty: Int!
+}
+
+enum Waluta {
+  PLN
+  EUR
+}
