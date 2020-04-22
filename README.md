@@ -1,2 +1,2 @@
 # GraphQL_Example
-yarn install  nodemon src/app.js
+yarn install<br/>nodemon src/app.js
